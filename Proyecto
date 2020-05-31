@@ -1,0 +1,274 @@
+package Main.pkg;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+public class 
+{
+ static Scanner escribir=new Scanner(System.in);
+    static Scanner leer=new Scanner(System.in);
+    static String nombre[]= new String [5];
+    static String telefono[]= new String [5];
+    static String x;
+	
+public static void main(String[] args) throws IOException  {
+    nombre[0]=null;
+    nombre[1]=null;    
+    nombre[2]=null;
+    nombre[3]=null;
+    nombre[4]=null;
+    menu();
+
+    }
+
+public static void menu() throws IOException {
+
+    int opt;
+    System.out.println("\t***********\n"
+                + "\t\tBASE DE DATOS\n"
+                + "\t***********");
+    System.out.println(" ");
+    System.out.print("Bienvenido\n"
+                + " \n"
+                + "1. Registrar usuario\n"
+                + "2. Modificar registro\n"
+                + "3. Eliminar registro\n"
+                + "4. Mostrar directorio\n"
+                + "5. Exportar registro en documento txt\n"
+                + "6. Salir\n");
+    System.out.println(" ");
+    System.out.print("Ingrese una opción: ");
+    opt = leer.nextInt();
+
+        switch (opt) {
+            case 1:
+                System.out.println("\t REGISTRO DE USUARIO");
+                System.out.println(" ");
+                if (nombre[0]==null || nombre[1]==null || nombre[2]==null || nombre[3]==null || nombre[4]==null){
+                    ingreso_usuario(nombre,telefono);
+                }
+                else {
+                System.out.println("Ya excedió el limite de registros.");
+                System.out.println(" ");
+                    menu();
+                }
+                break;
+
+            case 2:
+                System.out.println("\tMODIFICAR REGISTRO");
+                modificar(nombre, telefono);
+                break;
+
+            case 3:
+                System.out.println("\tELIMINAR REGISTRO");
+                eliminar(nombre, telefono);
+                break;
+
+            case 4:
+                System.out.println("\tDIRECTORIO");
+                busqueda(nombre, telefono);
+                break;
+
+            case 5:
+                System.out.println(" ");
+                System.out.println("El archivo se ha exportado satisfactoriamente en su carpeta de documentos ubicado en C:/Users/Public/Documents");
+                System.out.println(" ");
+                exportar_archivo(nombre, telefono);
+                menu();
+                break;
+
+            case 6:
+                System.out.println(" ");
+                System.out.println("Realizado por:\n"
+                    +"Saira K. Vega.\n"
+                    +"Jessica Y. Chala\n"
+                    +"Gina C. Paz\n"
+                    +"Joseph E. Rodriguez");
+                System.out.println(" ");
+                System.out.println("FIN DEL PROGRAMA");
+                System.exit(0);
+                break;
+
+            default:
+                System.out.println("Opción incorrecta, intente de nuevo.");
+                menu();
+                break;
+        }
+
+}
+
+public static void ingreso_usuario(String[] nombre, String[] telefono) throws IOException {
+    String j;
+    int i, n;
+    
+    if (nombre[0] == null) {
+        System.out.print("Ingrese el nombre[0]: ");
+        nombre[0] = escribir.nextLine();
+
+        System.out.print("Ingrese numero de telefono[0]: ");
+        telefono[0] = escribir.nextLine();
+
+        System.out.println("¿Desea registrar otro usuario? S/N");
+        x = escribir.nextLine();
+    } 
+    
+    else {
+        x = "s";
+    }
+
+    if (x.equals("s") || x.equals("S")) {
+        for (i = 1; i < nombre.length; i++) {
+            if (nombre[i] == null) {
+                System.out.print("Ingrese el nombre[" + i + "]: ");
+                nombre[i] = escribir.nextLine();
+
+                System.out.print("Ingrese numero de telefono[" + i + "]: ");
+                telefono[i] = escribir.nextLine();
+
+                System.out.println("¿Desea registrar otro usuario? S/N");
+                x = escribir.nextLine();
+
+                if (x.equals("n") || x.equals("N")) {
+                    menu();
+                } 
+                else if (x.equals("s") || x.equals("S")) {
+                        
+                    if (nombre[0]!=null && nombre[1]!=null && nombre[2]!=null && nombre[3]!=null && nombre[4]!=null) {
+                        System.out.println("Ya excedió el limite de registros");
+                        menu();
+                    } 
+                    ingreso_usuario(nombre,telefono);
+                }
+                else if (x!=("n") && x!=("N") && x!=("S") && x!=("s")) {
+                    System.out.println("Opción incorrecta. Sera devuelto al menu.");
+                    menu(); 
+                }
+            }
+        }
+    } //cerrar if
+       
+    else if (x.equals("n") || x.equals("N")) {
+        menu();
+    }
+    
+    else if (x!=("n") && x!=("N") && x!=("S") && x!=("s")) {
+        System.out.println("Opción incorrecta. Sera devuelto al menu.");
+        menu(); 
+    }
+     
+
+}
+
+public static void modificar(String[] nombre, String[] telefono) throws IOException {
+    int i;
+
+    System.out.print("Indique el registro a modificar: ");
+    i = leer.nextInt();
+    System.out.println(nombre[i] + "[" + i + "] \n" + telefono[i] + "[" + i + "] ");
+
+    System.out.println(" ");
+
+    System.out.print("Modifique el nombre [" + i + "]: ");
+    nombre[i] = escribir.nextLine();
+
+    System.out.print("Modifique el telefono [" + i + "]: ");
+    telefono[i] = escribir.nextLine();
+
+    System.out.println(" ");
+
+    System.out.println("¿Desea modificar otro usuario? S/N");
+    x = escribir.nextLine();
+
+    if (x.equals("s") || x.equals("S")) {
+        modificar(nombre,telefono);
+    } 
+    else if (x.equals("n") || x.equals("N")) {
+        menu();
+    }
+    else if (x!=("n") && x!=("N") && x!=("S") && x!=("s")) {
+        System.out.println("Opción incorrecta. Sera devuelto al menu.");
+        menu(); 
+    }
+
+}
+
+public static void eliminar(String[] nombre, String[] telefono) throws IOException {
+    int i;
+
+    System.out.print("Indique el registro a eliminar: ");
+    i = leer.nextInt();
+    System.out.println(nombre[i] + ", " + telefono[i]);
+    System.out.println(" ");
+
+    System.out.println("¿Seguro que desea eliminar el registro? S/N");
+    x = escribir.nextLine();
+
+    if (x.equals("s") || x.equals("S")) {
+        nombre[i] = null;
+        telefono[i] = null;
+        System.out.println("Datos eliminados");
+    } 
+    else if (x.equals("n") || x.equals("N")) {
+        eliminar(nombre, telefono);
+    }
+    else if (x!=("n") && x!=("N") && x!=("S") && x!=("s")) {
+        System.out.println("Opción incorrecta. Intente de nuevo.");
+        eliminar(nombre,telefono); 
+    }
+
+    System.out.println(" ");
+
+    System.out.println("¿Desea eliminar otro registro? S/N");
+    x = escribir.nextLine();
+
+    if (x.equals("s") || x.equals("S")) {
+        eliminar(nombre, telefono);
+    } 
+    else if (x.equals("n") || x.equals("N")) {
+        menu(); 
+    }
+    else if (x!=("n") && x!=("N") && x!=("S") && x!=("s")) {
+        System.out.println("Opción incorrecta. Sera devuelto al menu.");
+        menu(); 
+    }    
+        
+}
+
+public static void busqueda(String[] nombre, String[] telefono) throws IOException {
+
+    for (int i = 0; i < nombre.length; i++) {
+        System.out.println("[" + i + "]" + nombre[i] + ": " + telefono[i]);
+        System.out.println(" ");
+    }
+    
+    System.out.println("¿Quiere exportar el archivo a un documento txt? S/N");
+    x = escribir.nextLine();
+    if (x.equals("s") || x.equals("S")) {
+        exportar_archivo(nombre,telefono);
+    } 
+    else if (x.equals("n") || x.equals("N")) {
+        menu();
+    }
+    else if (x!=("n") && x!=("N") && x!=("S") && x!=("s")) {
+        System.out.println("Opción incorrecta. Sera devuelto al menu.");
+        menu(); 
+    }
+
+}
+
+public static void exportar_archivo(String[] nombre, String[] telefono) throws IOException {
+    try (FileWriter directorio = new FileWriter("C:/Users/Public/Documents/Proyecto(El mejor grupo).txt")) {
+    directorio.write("Nombre\t\t\t\tTelefono\n");
+    
+    for (int i = 0; i < nombre.length; i++) {
+        directorio.write("[" + i + "]" + nombre[i] + "\t\t\t[" + i + "]" + telefono[i] + " \n");
+        directorio.write(" ");
+    }
+    menu();
+            
+    }
+}
+
+   
+
+}  //Fin del programa
